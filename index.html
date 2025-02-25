@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess The Movie</title>
+</head>
+<style>
+    .hints {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: start;
+    }
+
+    .hints ul li {
+        font-size: 25px;
+    }
+
+    .bomb {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    table {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 50px;
+    }
+
+    .charinput {
+        height: 60px;
+        width: 55px;
+        font-size: 20px;
+        text-align: center;
+    }
+
+    .empty {
+        height: 75px;
+        width: 75px;
+    }
+
+    #retrybtndiv {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #retrybtn {
+        height: 50px;
+        width: 70px;
+        background-color: blue;
+        color: white;
+        display: none;
+    }
+
+    #correct {
+        display: none;
+    }
+</style>
+
+<body>
+
+    <h1 style="text-align: center">Guess The Movie</h1>
+    <div class="hints">
+        <ul>
+            <li>It is a Love Story</li>
+            <li>"Main Apni Favourite Hoon!" - A famous dialogue. </li>
+            <li>The male lead is a heartbroken businessman.</li>
+        </ul>
+    </div>
+
+    <table>
+        <tr>
+            <td><img src="Images/image1.png" height="75px" width="75px" id="bomb0"></td>
+            <td><img src="Images/image1.png" height="75px" width="75px" id="bomb1"></td>
+            <td><img src="Images/image1.png" height="75px" width="75px" id="bomb2"></td>
+            <td class="empty"></td>
+            <td><img src="Images/image1.png" height="75px" width="75px" id="bomb3"></td>
+            <td><img src="Images/image1.png" height="75px" width="75px" id="bomb4"></td>
+            <td class="empty"></td>
+            <td><img src="Images/image1.png" height="75px" width="75px" id="bomb5"></td>
+            <td><img src="Images/image1.png" height="75px" width="75px" id="bomb6"></td>
+            <td><img src="Images/image1.png" height="75px" width="75px" id="bomb7"></td>
+        </tr>
+        <tr>
+            <td><input id="input0" type="text" maxlength="1" class="charinput"></td>
+            <td><input id="input1" type="text" maxlength="1" class="charinput"></td>
+            <td><input id="input2" type="text" maxlength="1" class="charinput"></td>
+            <td class="empty"></td>
+            <td><input id="input3" type="text" maxlength="1" class="charinput"></td>
+            <td><input id="input4" type="text" maxlength="1" class="charinput"></td>
+            <td class="empty"></td>
+            <td><input id="input5" type="text" maxlength="1" class="charinput"></td>
+            <td><input id="input6" type="text" maxlength="1" class="charinput"></td>
+            <td><input id="input7" type="text" maxlength="1" class="charinput"></td>
+        </tr>
+    </table>
+
+    <div id="retrybtndiv">
+        <button id="retrybtn">Retry</button>
+        <h1 id="correct">Wohoo! Correct!</h1>
+    </div>
+    <script>
+        let correctcount = 0
+        let moviename = "jabwemet"
+        for (let i = 0; i < moviename.length; i++) {
+            let input = document.getElementById(`input${i}`)
+            input.addEventListener("input", function () {
+
+                if (input.value.toLowerCase() != moviename[i]) {
+                    document.getElementById(`bomb${i}`).src = "Images/image2.png"
+                    let btn = document.getElementById("retrybtn")
+                    btn.setAttribute("style", "display:block")
+                    for (let j = 0; j < moviename.length; j++) {
+
+                        document.getElementById(`input${j}`).setAttribute("disabled", "true")
+                    }
+                    correctcount = 0
+
+                }
+                else {
+                    input.setAttribute("disabled", "true")
+                    correctcount++
+                }
+                retrybtn.addEventListener("click", function () {
+                    input.value = ""
+                    let btn = document.getElementById("retrybtn")
+                    btn.setAttribute("style", "display:none")
+                    for (let j = 0; j < moviename.length; j++) {
+                        document.getElementById(`input${j}`).removeAttribute("disabled")
+                    }
+                    document.getElementById(`bomb${i}`).src = "Images/image1.png"
+                })
+            })
+            input.addEventListener("input", function () {
+                let nextinput = document.getElementById(`input${i + 1}`)
+                if (nextinput) {
+                    nextinput.focus()
+                }
+                if (correctcount == moviename.length) {
+                    let correct = document.getElementById("correct")
+                    correct.setAttribute("style", "display:block")
+                }
+            })
+
+        }
+
+    </script>
+</body>
+
+</html>
